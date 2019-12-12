@@ -1,18 +1,18 @@
-use std::fs;
+use std::fs::File;
+use std::io::{BufReader, BufRead};
 
 pub fn day1() -> i32 {
-    let filename = "src/day1/input.txt";
-    let contents = fs::read_to_string(filename)
-        .expect("Something went wrong reading the file");
-    let numbers: Vec<i32> = contents
-        .split_ascii_whitespace()
-        .map(|s| s.parse().unwrap())
-        .collect();
+    let mut res: i32 = 0;
 
-    let mut res = 0;
-    for num in numbers {
+    let file = File::open("src/day1/input.txt").unwrap();
+
+    let buffer  = BufReader::new(file);
+
+    for line in buffer.lines() {
+        let num: i32 = line.unwrap().parse().unwrap();
         res += (num / 3) - 2;
     }
 
-    return res;
+    return res
+
 }
